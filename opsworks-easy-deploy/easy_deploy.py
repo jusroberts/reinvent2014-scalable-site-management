@@ -48,16 +48,7 @@ class Operation(object):
     @property
     def stack_id(self):
         if self._stack_id is None:
-            stacks = self._make_api_call('opsworks', 'DescribeStacks')['Stacks']
-            stack_names = [stack['Name'] for stack in stacks]
-            for stack in stacks:
-                stack_id = stack['StackId']
-                if self.stack_name.lower() == stack['Name'].lower():
-                    self._stack_id = stack_id
-                    break
-            else:
-                log("Stack {0} not found.  Stacks found: {1}.  Aborting".format(self.stack_name, stack_names))
-                sys.exit(1)
+            self._stack_id_ = self.stack_name
         return self._stack_id
 
     @property
